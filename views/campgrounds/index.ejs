@@ -1,0 +1,161 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>YelpCamp</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="all,follow">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+        <script src="https://use.fontawesome.com/6120860446.js"></script>
+          <!-- Google fonts - Roboto-->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,300,700,400italic">
+        <link href="https://fonts.googleapis.com/css?family=Caveat+Brush|Luckiest+Guy" rel="stylesheet">
+          <!-- owl carousel-->
+        <link rel="stylesheet" href="vendor/owl.carousel/assets/owl.carousel.css">
+        <link rel="stylesheet" href="vendor/owl.carousel/assets/owl.theme.default.css">
+          <!-- theme stylesheet-->
+        <link rel="stylesheet" href="/stylesheets/style.sea.css" id="theme-stylesheet">
+          <!-- Favicon-->
+        <link rel="shortcut icon" href="img/favicon.png">
+        <link rel="stylesheet" href="/stylesheets/main.css">
+        <script>
+         $(document).ready(function () {
+         $('[data-toggle="offcanvas"]').click(function () {
+             $('.row-offcanvas').toggleClass('active')
+           });
+         }); 
+         </script>
+    </head>
+    <body>
+    
+    
+    <div class="container">
+        <% if(error && error.length > 0){ %>
+            <div class="alert alert-danger" role="alert">
+                <%= error %>
+            </div>
+        <% } %>
+        <% if(success && success.length > 0){ %>
+            <div class="alert alert-success" role="alert">
+                <%= success %>
+            </div>
+        <% } %>
+        <% if(message && message.length > 0){ %>
+            <div class="alert alert-info" role="alert">
+                <%= message %>
+            </div>
+        <% } %>
+    </div>
+    <div id="all">
+    <div class="container-fluid">
+      <div class="row row-offcanvas row-offcanvas-left"> 
+        <!--   *** SIDEBAR ***-->
+        <div id="sidebar" class="col-md-4 col-lg-3 sidebar-offcanvas">
+          <div class="sidebar-content">
+            <h1 id="fontHeader" class="sidebar-heading"> <a href="/" style="text-decoration:none">YelpCamp</a></h1>
+            <p>Welcome to YelpCamp!
+            <% if(currentUser && currentUser.isAdmin) { %>
+                <span class="badge badge-pill badge-info">You're logged in as an Admin</span>
+            <% } %>
+            </p>
+            <p>Campsites visited and submitted by users like you. </p>
+            <ul class="sidebar-menu">
+                <!-- Link-->
+                <li class="sidebar-item <%= typeof page !== 'undefined' && page === 'login' ? 'active' : '' %>">
+                    <a href="/campgrounds" class="sidebar-link active">Campgrounds</a>
+                </li>
+                <li class="sidebar-item <%= typeof page !== 'undefined' && page === 'login' ? 'active' : '' %>">
+                    <a href="/resources" class="sidebar-link">Resource</a>
+                </li>
+                <!-- Link-->
+                <% if(!currentUser){ %>
+                    <li class="sidebar-item <%= typeof page !== 'undefined' && page === 'login' ? 'active' : '' %>">
+                        <a class="sidebar-link" href="/login">Login</a>
+                    </li>
+                    <li class="sidebar-item <%= typeof page !== 'undefined' && page === 'register' ? 'active' : '' %>">
+                        <a class="sidebar-link" href="/register">Sign Up</a>
+                    </li>
+                  <% } else { %>
+                      <li class="nav-item"><a class="nav-link" href="#">Hello, <%= currentUser.username %></a></li>
+                      <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                  <% } %>
+            </ul>
+            <p>
+                 <a href="/campgrounds/new" class="action-button animate yellow" style="text-decoration:none">Add New Campground</a>
+            <p>
+            <div class="copyright text-center text-md-left">
+              <p class="credit">&copy;YelpCamp 2018 ER | Template by <a href="http://bootstrapious.com/portfolio-themes" class="external">Bootstrapious.com</a></p>
+              <!-- Please do not remove the backlink to us, unless you support the development at http://bootstrapious.com/donate. It is part of the license conditions. Thanks for understanding :)        -->
+            </div>
+          </div>
+        </div>
+        <!--   *** SIDEBAR END ***  -->
+        <!--   *** PORTFOLIO ***-->
+        <div class="col-md-8 col-lg-9  content-column">
+            <div class="small-navbar d-flex d-md-none">
+                <button type="button" data-toggle="offcanvas" class="navbar-toggler btn btn-outline-primary"> <i class="fa fa-align-left mr-2"></i>Menu</button>
+                <h1 id="fontHeader"class="small-navbar-heading"> <a href="/campgrounds">YelpCamp </a></h1>
+            </div>
+                    <div class="col-lg-12 col-md-6 mx-auto"style="width: 200px;">
+                        <p>
+                             <form class="form-inline" action="/campgrounds" method="GET">
+                                 <div class="form-group">
+                                     <input class="form-control" type="text" name="search" placeholder="Campround search...">
+                                     <input class="btn btn-default" type="submit" value="Search">
+                                 </div>
+                             </form>
+                         </p>
+                    </div>
+                    <div class="col-md-12">
+                        <% if(noMatch != null){ %>
+                            <h3><%= noMatch %></h3>
+                        <% } %>
+                    </div>
+                <div class="grid row">
+                  <% campgrounds.forEach(function(campground){ %>
+                        <div class="col-lg-3 col-md-6  mb-4 grid-item"> 
+                          <div class="box-masonry"> <a href="/campgrounds/<%= campground._id%>" title="" class="box-masonry-image with-hover-overlay with-hover-icon"><img src="<%= campground.image %>" alt="<%= campground.name %>" class="img-fluid"></a>
+                            <div class="box-masonry-text"> 
+                              <h4><%= campground.name %></h4>
+                              <div class="box-masonry-desription">
+                                <p><%- campground.description.substring(0, 30) %>...</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                   <% }); %>
+                </div>
+                  </div>
+                </div>
+                <!--   *** PORTFOLIO END ***-->
+              </div>
+            </div>
+        </div>
+      </div>
+     </div>
+    </div>
+
+<!--Content Starts here-->
+
+
+        <footer class="footer">
+          <div class="container">
+            <p class="text-muted">&copy; YelpCamp 2018 | <a href="/campgrounds">Home</a> | <a href="/campgrounds/new">New Campground</a></p>
+          </div>
+        </footer>
+        <!-- Bootstap and its dependencies -->
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/popper.js/umd/popper.min.js"> </script>
+        <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+        <script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
+        <script src="vendor/owl.carousel/owl.carousel.min.js"></script>
+        <script src="vendor/masonry-layout/masonry.pkgd.min.js"></script>
+        <script src="js/front.js"></script>
+    </body>
+</html>

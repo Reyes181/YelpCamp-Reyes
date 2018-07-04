@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Yelp Camp</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+        <script src="https://use.fontawesome.com/6120860446.js"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,300,700,400italic">
+        <link href="https://fonts.googleapis.com/css?family=Fredoka+One" rel="stylesheet">
+        <link href="css/owl.carousel.css" rel="stylesheet">
+		<link href="css/owl.theme.default.min.css"  rel="stylesheet">
+        <link rel="stylesheet" href="/stylesheets/main.css">
+    </head>
+    <body>
+    
+    <div class="header">
+        <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
+          <a class="navbar-brand" href="/">YelpCamp</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item <%= typeof page !== 'undefined' && page === 'campgrounds' ? 'active' : '' %>"><a class="nav-link" href="/campgrounds">Campgrounds</a></li>
+            </ul>
+            <ul class="navbar-nav navbar-right">
+                <li class="nav-item <%= typeof page !== 'undefined' && page === 'campgrounds' ? 'active' : '' %>"><a class="nav-link" href="/resources">Resource</a></li>
+                  <% if(!currentUser){ %>
+                    <li class="nav-item <%= typeof page !== 'undefined' && page === 'login' ? 'active' : '' %>"><a class="nav-link" href="/login">Login</a></li>
+                    <li class="nav-item <%= typeof page !== 'undefined' && page === 'register' ? 'active' : '' %>"><a class="nav-link" href="/register">Sign Up</a></li>
+                  <% } else { %>
+                      <li class="nav-item"><a class="nav-link" href="#">Hello, <%= currentUser.username %></a></li>
+                      <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                  <% } %>
+            </ul>
+          </div>
+        </nav>
+    </div>
+    
+    
+    <div class="container">
+        <% if(error && error.length > 0){ %>
+            <div class="alert alert-danger" role="alert">
+                <%= error %>
+            </div>
+        <% } %>
+        <% if(success && success.length > 0){ %>
+            <div class="alert alert-success" role="alert">
+                <%= success %>
+            </div>
+        <% } %>
+        <% if(message && message.length > 0){ %>
+            <div class="alert alert-info" role="alert">
+                <%= message %>
+            </div>
+        <% } %>
+    </div>
+    <div class="container">
