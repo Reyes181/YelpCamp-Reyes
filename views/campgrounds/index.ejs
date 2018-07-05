@@ -80,7 +80,7 @@
                         <a class="sidebar-link" href="/register">Sign Up</a>
                     </li>
                   <% } else { %>
-                      <li class="nav-item"><a class="nav-link" href="#">Hello, <%= currentUser.username %></a></li>
+                      <li class="nav-item"><a class="nav-link" href="/users/<%=currentUser.id%>">Hello, <%= currentUser.username %></a></li>
                       <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
                   <% } %>
             </ul>
